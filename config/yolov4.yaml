@@ -1,0 +1,54 @@
+model_name: yolov4
+data:
+  train_annotation_path: /home/huffman/data/annotations/instances_train2017.json
+  #  train_annotation_path: /home/huffman/data/annotations/instances_val2017.json
+  val_annotation_path: /home/huffman/data/annotations/instances_val2017.json
+  train_img_root: /home/huffman/data/train2017
+  #  train_img_root: /home/huffman/data/val2017
+  val_img_root: /home/huffman/data/val2017
+  max_thresh: 640
+  use_crowd: False
+  batch_size: 16
+  num_workers: 4
+  debug: False
+  remove_blank: Ture
+
+model:
+  num_cls: 80
+  in_channel: 3
+  scale_name: s
+  strides: [8., 16., 32.]
+  anchors:
+    - [11,12,  15,34,  36,25]
+    - [35,61,  80,56,  66,136]
+    - [160,121,  159,269,  394,312]
+  k: [5, 9, 13]
+  ratio_thresh: 4.0
+  expansion_bias: 0.5
+  cls_pw: 1.0
+  obj_pw: 1.0
+  iou_type: ciou
+  coord_type: xywh
+  iou_ratio: 1.0
+  iou_weights: 0.05
+  cls_weights: 0.5
+  obj_weights: 1.0
+  conf_thresh: 0.001
+  iou_thresh: 0.6
+  merge: True
+  max_det: 300
+optim:
+  optimizer: SGD
+  lr: 0.01
+  momentum: 0.937
+  warm_up_epoch: 3
+  weight_decay: 0.0005
+  epochs: 300
+  sync_bn: True
+  amp: True
+val:
+  interval: 1
+  weight_path: weights
+
+
+gpus: 0,1,2,3
